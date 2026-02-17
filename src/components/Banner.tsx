@@ -1,21 +1,38 @@
 import "./Banner.css";
 
-function Banner() {
+interface BannerProps {
+  movie: any;
+}
+
+const base_url = "https://image.tmdb.org/t/p/original";
+
+function Banner({ movie }: BannerProps) {
+  if (!movie) return null;
+
   return (
-    <header className="banner">
+    <header
+      className="banner"
+      style={{
+        backgroundImage: `url(${base_url}${
+          movie.backdrop_path || movie.poster_path
+        })`,
+        backgroundSize: "cover",
+        backgroundPosition: "center center",
+      }}
+    >
       <div className="banner_contents">
-        <h1 className="banner_title">Stranger Things</h1>
+        <h1 className="banner_title">
+          {movie.title || movie.name || movie.original_name}
+        </h1>
 
         <div className="banner_buttons">
           <button className="banner_button">Play</button>
           <button className="banner_button">My List</button>
         </div>
 
-        <p className="banner_description">
-          When a young boy disappears, his mother, a police chief,
-          and his friends confront terrifying supernatural forces
-          in order to get him back.
-        </p>
+        <h1 className="banner_description">
+          {movie.overview}
+        </h1>
       </div>
 
       <div className="banner_fadeBottom" />

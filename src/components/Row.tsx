@@ -5,20 +5,22 @@ import "./Row.css";
 interface RowProps {
   title: string;
   fetchUrl: string;
+  isLargeRow?: boolean;
+  onMovieSelect?: (movie: any) => void;
 }
 
-const base_url = "https://image.tmdb.org/t/p/original/";
+const base_url = "https://image.tmdb.org/t/p/original";
 
-function Row({ title, fetchUrl }: RowProps) {
+function Row({ title, fetchUrl, isLargeRow, onMovieSelect }: RowProps) {
   const [movies, setMovies] = useState<any[]>([]);
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       const request = await axios.get(
         `https://api.themoviedb.org/3${fetchUrl}`
       );
       setMovies(request.data.results);
-    }
+    };
 
     fetchData();
   }, [fetchUrl]);
@@ -31,9 +33,12 @@ function Row({ title, fetchUrl }: RowProps) {
         {movies.map((movie) => (
           <img
             key={movie.id}
-            className="row_poster"
-            src={`${base_url}${movie.poster_path}`}
-            alt={movie.name}
+            className={`row_poster ${isLargeRow ? "row_posterLarge" : ""}`}
+            src={`${base_url}${
+              isLargeRow ? movie.poster_path : movie.backdrop_path
+            }`}
+            alt={movie.title || movie.name}
+            onClick={() => onMovieSelect && onMovieSelect(movie)}
           />
         ))}
       </div>
