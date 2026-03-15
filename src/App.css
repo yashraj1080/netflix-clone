@@ -5,8 +5,52 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.app {
-  
+/* ── Cinematic Glow: CSS variable defaults (Netflix red) ── */
+:root {
+  --theme-r: 229;
+  --theme-g: 9;
+  --theme-b: 20;
+}
 
-  padding-top: 60px; /* IMPORTANT */
+/* Dynamic background radial glow from top */
+.app {
+  padding-top: 60px;
+  background: radial-gradient(
+    ellipse 80% 40% at 50% 0%,
+    rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.15) 0%,
+    transparent 70%
+  );
+  transition: background 1.2s ease;
+  min-height: 100vh;
+}
+
+/* Coming Soon placeholder */
+.coming_soon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
+
+.coming_soon_inner {
+  text-align: center;
+  color: #999;
+}
+
+.coming_soon_icon {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.coming_soon_inner h2 {
+  font-size: 2rem;
+  color: white;
+  margin: 0 0 10px;
+}
+
+.coming_soon_inner p {
+  font-size: 1rem;
+  color: #888;
+  margin: 0;
 }

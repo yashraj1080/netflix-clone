@@ -1,8 +1,13 @@
 .banner {
   color: white;
-  object-fit: contain;
   height: 500px;
   position: relative;
+  background-size: cover;
+  background-position: center center;
+
+  /* Cinematic Glow: colored inner glow on the left side */
+  box-shadow: inset 8px 0 80px rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.35);
+  transition: box-shadow 1.2s ease;
 }
 
 .banner_contents {
@@ -15,6 +20,12 @@
   font-size: 3rem;
   font-weight: 800;
   padding-bottom: 0.3rem;
+
+  /* Cinematic Glow: colored text shadow */
+  text-shadow:
+    0 0 40px rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.9),
+    0 2px 8px rgba(0, 0, 0, 0.8);
+  transition: text-shadow 1.2s ease;
 }
 
 .banner_description {
@@ -23,6 +34,7 @@
   padding-top: 1rem;
   font-size: 1rem;
   max-width: 360px;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
 }
 
 .banner_buttons {
@@ -38,13 +50,18 @@
   border-radius: 0.2vw;
   padding: 0.5rem 2rem;
   margin-right: 1rem;
-  background-color: rgba(51, 51, 51, 0.5);
+  background-color: rgba(51, 51, 51, 0.6);
+  transition: all 0.2s, box-shadow 1.2s ease, border-color 1.2s ease;
+
+  /* Cinematic Glow: colored ring on hover */
+  border: 1px solid transparent;
 }
 
 .banner_button:hover {
-  color: black;
-  background-color: #e6e6e6;
-  transition: all 0.2s;
+  color: white;
+  background-color: rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.45);
+  border-color: rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.8);
+  box-shadow: 0 0 20px rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.5);
 }
 
 .banner_fadeBottom {
@@ -52,20 +69,24 @@
   bottom: 0;
   height: 7.4rem;
   width: 100%;
+  /* Cinematic Glow: tinted fade instead of plain grey */
   background-image: linear-gradient(
     180deg,
     transparent,
-    rgba(37, 37, 37, 0.61),
+    rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.08),
     #111
   );
+  transition: background-image 1.2s ease;
 }
+
+/* Trailer modal */
 .trailer_modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: rgba(0, 0, 0, 0.88);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -75,4 +96,9 @@
 .trailer_content {
   width: 80%;
   max-width: 900px;
+  /* Cinematic Glow: colored border around the player */
+  box-shadow: 0 0 60px rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.4);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: box-shadow 1.2s ease;
 }

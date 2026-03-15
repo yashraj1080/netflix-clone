@@ -1,6 +1,17 @@
 .row {
   margin-left: 20px;
   color: white;
+  margin-bottom: 8px;
+}
+
+.row h2 {
+  /* Cinematic Glow: left accent bar in theme color */
+  padding-left: 12px;
+  border-left: 3px solid rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.9);
+  color: rgba(255, 255, 255, 0.95);
+  transition: border-color 1.2s ease, color 1.2s ease;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
 }
 
 .row_posters {
@@ -16,9 +27,18 @@
 .row_poster {
   max-height: 150px;
   margin-right: 10px;
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-radius: 3px;
 }
 
 .row_poster:hover {
   transform: scale(1.08);
+  /* Cinematic Glow: colored glow on poster hover */
+  box-shadow: 0 6px 24px rgba(var(--theme-r), var(--theme-g), var(--theme-b), 0.5);
+  z-index: 1;
+  position: relative;
+}
+
+.row_posterLarge {
+  max-height: 250px;
 }
