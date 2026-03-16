@@ -1,17 +1,22 @@
 import { useState } from "react";
 import axios from "axios";
 import YouTube from "react-youtube";
+import TheaterMode from "./TheaterMode";
 import "./Banner.css";
 
 interface BannerProps {
   movie: any;
+  themeColor: [number, number, number];
+  isInList: boolean;
+  onToggleMyList: () => void;
 }
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const base_url = "https://image.tmdb.org/t/p/original";
 
-function Banner({ movie }: BannerProps) {
+function Banner({ movie, themeColor, isInList, onToggleMyList }: BannerProps) {
   const [trailerUrl, setTrailerUrl] = useState<string>("");
+  const [theaterOpen, setTheaterOpen] = useState(false);
 
   if (!movie) return null;
 
@@ -20,19 +25,14 @@ function Banner({ movie }: BannerProps) {
       setTrailerUrl("");
       return;
     }
-
     try {
       const response = await axios.get(
         `https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${API_KEY}`
       );
-
       const trailers = response.data.results;
-
       const officialTrailer = trailers.find(
-        (video: any) =>
-          video.type === "Trailer" && video.site === "YouTube"
+        (video: any) => video.type === "Trailer" && video.site === "YouTube"
       );
-
       if (officialTrailer) {
         setTrailerUrl(officialTrailer.key);
       } else {
@@ -48,9 +48,7 @@ function Banner({ movie }: BannerProps) {
       <header
         className="banner"
         style={{
-          backgroundImage: `url(${base_url}${
-            movie.backdrop_path || movie.poster_path
-          })`,
+          backgroundImage: `url(${base_url}${movie.backdrop_path || movie.poster_path})`,
           backgroundSize: "cover",
           backgroundPosition: "center center",
         }}
@@ -62,9 +60,17 @@ function Banner({ movie }: BannerProps) {
 
           <div className="banner_buttons">
             <button className="banner_button" onClick={handlePlay}>
-              {trailerUrl ? "Close" : "Play"}
+              {trailerUrl ? "Close" : "▶ Play"}
             </button>
-            <button className="banner_button">My List</button>
+            <button className="banner_button" onClick={() => setTheaterOpen(true)}>
+              🎭 Theater Mode
+            </button>
+            <button
+              className={`banner_button ${isInList ? "banner_button_in_list" : ""}`}
+              onClick={onToggleMyList}
+            >
+              {isInList ? "✓ In My List" : "＋ My List"}
+            </button>
           </div>
 
           <h1 className="banner_description">{movie.overview}</h1>
@@ -73,12 +79,10 @@ function Banner({ movie }: BannerProps) {
         <div className="banner_fadeBottom" />
       </header>
 
+      {/* Trailer modal */}
       {trailerUrl && (
         <div className="trailer_modal" onClick={() => setTrailerUrl("")}>
-          <div
-            className="trailer_content"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="trailer_content" onClick={(e) => e.stopPropagation()}>
             <YouTube
               videoId={trailerUrl}
               opts={{
@@ -89,6 +93,15 @@ function Banner({ movie }: BannerProps) {
             />
           </div>
         </div>
+      )}
+
+      {/* Theater Mode */}
+      {theaterOpen && (
+        <TheaterMode
+          movie={movie}
+          themeColor={themeColor}
+          onClose={() => setTheaterOpen(false)}
+        />
       )}
     </>
   );
