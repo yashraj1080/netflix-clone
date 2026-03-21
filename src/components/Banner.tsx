@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import movieTrailer from "movie-trailer";
 import YouTube from "react-youtube";
 import TheaterMode from "./TheaterMode";
 import "./Banner.css";
@@ -25,22 +26,37 @@ function Banner({ movie, themeColor, isInList, onToggleMyList }: BannerProps) {
       setTrailerUrl("");
       return;
     }
+    const title = movie?.title || movie?.name || movie?.original_name;
     try {
+      // First try TMDB videos API (most reliable when it works)
+      const isTv = movie.media_type === "tv" || (!movie.release_date && movie.first_air_date);
+      const mediaType = isTv ? "tv" : "movie";
       const response = await axios.get(
-        `https://api.themoviedb.org/3/movie/${movie.id}/videos?api_key=${API_KEY}`
+        `https://api.themoviedb.org/3/${mediaType}/${movie.id}/videos?api_key=${API_KEY}`
       );
-      const trailers = response.data.results;
-      const officialTrailer = trailers.find(
-        (video: any) => video.type === "Trailer" && video.site === "YouTube"
-      );
-      if (officialTrailer) {
-        setTrailerUrl(officialTrailer.key);
-      } else {
-        alert("Trailer not available");
+      const videos: any[] = response.data.results.filter((v: any) => v.site === "YouTube");
+      const pick =
+        videos.find((v) => v.type === "Trailer") ||
+        videos.find((v) => v.type === "Teaser") ||
+        videos[0];
+      if (pick) {
+        setTrailerUrl(pick.key);
+        return;
       }
-    } catch (error) {
-      console.log("Error fetching trailer:", error);
-    }
+    } catch (_) { /* fall through to movie-trailer */ }
+
+    // Fallback: movie-trailer package searches by title
+    try {
+      const url = await movieTrailer(title || "");
+      if (url) {
+        // Extract YouTube video ID from the URL
+        const urlParams = new URLSearchParams(new URL(url).search);
+        const videoId = urlParams.get("v");
+        if (videoId) { setTrailerUrl(videoId); return; }
+      }
+    } catch (_) { /* ignore */ }
+
+    alert("Trailer not available for this title");
   };
 
   return (

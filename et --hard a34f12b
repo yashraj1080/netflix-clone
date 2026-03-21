@@ -1,0 +1,19 @@
+[33m5516393[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{0}: reset: moving to 5516393
+[33mf33e00a[m HEAD@{1}: commit: my-list button made working
+[33m2bbb0be[m HEAD@{2}: commit: made changes in navbar added serch bar
+[33md143f0f[m HEAD@{3}: commit: chamged dockerfile name and file
+[33m5516393[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{4}: pull origin main --rebase (finish): returning to refs/heads/main
+[33m5516393[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m HEAD@{5}: pull origin main --rebase (pick): ready netflix
+[33mc864972[m HEAD@{6}: pull origin main --rebase (start): checkout c864972b0a044fe3e18e7d030f31670090403323
+[33m678c060[m HEAD@{7}: commit: ready netflix
+[33m94ffb8f[m HEAD@{8}: reset: moving to 94ffb8f
+[33mc864972[m HEAD@{9}: commit: add production Docker etup
+[33m29fa16e[m HEAD@{10}: commit: stable version before AWS EC@ deployment - added movie details
+[33m94ffb8f[m HEAD@{11}: reset: moving to 94ffb8f
+[33m94ffb8f[m HEAD@{12}: reset: moving to 94ffb8f
+[33m94ffb8f[m HEAD@{13}: commit: added trailer to movie poster, when you hit play button trailer is being played
+[33m29d7255[m HEAD@{14}: commit: Refactor app structure: implement clean banner update architecture with multiple categories
+[33m14ca31a[m HEAD@{15}: commit: integred API for dyanmic movie poster
+[33mdace2f2[m HEAD@{16}: commit: added .env file
+[33m8729256[m HEAD@{17}: Branch: renamed refs/heads/master to refs/heads/main
+[33m8729256[m HEAD@{19}: commit (initial): first commit with Netflix clone UI with banner
